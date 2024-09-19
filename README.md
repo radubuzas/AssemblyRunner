@@ -42,18 +42,6 @@ To run an assembly file, use the following command:
 The `program_name` argument is optional and specifies which `.s` or `.asm` file to run.  
 If `program_name` is not provided, the script will automatically select the latest `.s` or `.asm` file in the current directory.
 
-## Example Usage
-
-1. To run a specific file, for example `hello.s`, use the following command:  
-```bash
-./run hello.s
-```
-
-2. To automatically run the latest assembly file:  
-```bash
-./run
-```
-
 ## Dependencies
 
 Docker is required to run the assembly code in a containerized environment. Ensure Docker is installed and running on your system.
