@@ -50,9 +50,9 @@ Docker is required to run the assembly code in a containerized environment. Ensu
 
 ### Running a Specific File
 
-If you have a file named `example.s` in your directory, you can run it with the following command: 
+If you have a file named `hello.s` in your directory, you can run it with the following command: 
 ```bash 
-./run example.s
+./run hello.s
 ```
 
 ### Running the Latest Assembly File
