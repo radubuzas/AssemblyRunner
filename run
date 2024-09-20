@@ -2,6 +2,52 @@
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
+
+DOCKER_CONFIG_JSON='{
+  "auths": {},
+  "currentContext": "colima",
+  "cliPluginsExtraDirs": [
+    "/opt/homebrew/lib/docker/cli-plugins"
+  ]
+}'
+
+
+init (){
+    echo -e "${GREEN}Checking${NC} if Homebrew is installed..."
+
+    if ! brew --version &> /dev/null; then
+        echo -e "${GREEN}Homebrew ${NC}is not installed. Installing now..."
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        if brew --version &> /dev/null; then
+            echo -e "${GREEN}Homebrew installed successfully."
+        else
+            echo -e "${RED}Homebrew installation failed.\nTry manual installation of Homebrew.\nContat the developer."
+        fi
+    fi
+
+    echo -e "${GREEN}Installing${NC} docker..."
+
+    brew install --formulae docker docker-completion docker-compose
+
+    echo -e "${GREEN}Installing${NC} colima..."
+
+    brew install --formulae colima
+
+    echo $DOCKER_CONFIG_JSON > ~/.docker/config.json
+
+    colima start default --arch x86_64 --cpu 2 --memory 2 --disk 2 --vm-type=vz-rosetta
+}
+
+
+if [ $# -eq 1 ] && [ $1 == "init" ]; then
+    if ls -1 | grep -E 'init' > /dev/null; then
+        echo -e "${RED}There exists a file named 'init'. Please remove it and try again if you want to initialize the environment."
+        exit 1
+    fi
+    init
+    exit 0
+fi
+
 if [ $# -eq 0 ]; then
     program_name=$(ls -1t | grep -E '\.(asm|s)$' | head -n 1)
     # extension=$(sed -r 's/(\.[^.]+$){1}//')

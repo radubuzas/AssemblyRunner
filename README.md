@@ -46,6 +46,11 @@ If `program_name` is not provided, the script will automatically select the late
 
 Docker is required to run the assembly code in a containerized environment. Ensure Docker is installed and running on your system.
 
+To install all dependencies you can to run
+```bash
+./run init
+```
+
 ## Examples
 
 ### Running a Specific File
