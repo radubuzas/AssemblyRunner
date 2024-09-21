@@ -31,11 +31,23 @@ init (){
 
     echo -e "${GREEN}Installing${NC} colima..."
 
-    brew install --formulae colima
+    if [ "$OSTYPE" == "darwin"* ] && [ "$(uname -m)" == "arm64"]; then
+        brew install --formulae colima
 
-    echo $DOCKER_CONFIG_JSON > ~/.docker/config.json
+        echo $DOCKER_CONFIG_JSON > ~/.docker/config.json
 
-    colima start x86_machine --verbose --arch x86_64 --cpu 2 --memory 4 --disk 5  
+        colima start x86_machine --verbose --arch x86_64 --cpu 2 --memory 4 --disk 5  
+    fi
+}
+
+
+check_if_mac_arm64_and_run_colima (){
+    if [[ "$OSTYPE" == "darwin"* && "$(uname -m)" == "arm64" ]]; then
+        if ! colima list | grep -q 'Running'; then
+            echo -e "${Green}Starting colima! This might take a while..."
+            colima start x86_machine
+        fi
+    fi
 }
 
 
@@ -55,6 +67,7 @@ if [ $# -eq 0 ]; then
     echo PROGRAM_NAME=$program_name > .env
     echo -e "Going to compile the latest file: ${GREEN}" $program_name
 
+    check_if_mac_arm64_and_run_colima
     docker compose up
 else
     if [ $# -gt 1 ]; then
@@ -68,6 +81,7 @@ else
 
         echo PROGRAM_NAME=$program_name > .env
 
+        check_if_mac_arm64_and_run_colima
         docker compose up
         
         pid=$!
