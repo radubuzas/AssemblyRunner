@@ -35,7 +35,7 @@ init (){
 
     echo $DOCKER_CONFIG_JSON > ~/.docker/config.json
 
-    colima start default --arch x86_64 --cpu 2 --memory 2 --disk 2 --vm-type=vz-rosetta
+    colima start x86_machine --verbose --arch x86_64 --cpu 2 --memory 4 --disk 5  
 }
 
 
