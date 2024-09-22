@@ -45,7 +45,7 @@ check_if_mac_arm64_and_run_colima (){
     if [[ "$OSTYPE" == "darwin"* && "$(uname -m)" == "arm64" ]]; then
         if ! colima list | grep -q 'Running'; then
             echo -e "${Green}Starting colima! This might take a while..."
-            colima start x86_machine
+            colima start x86_machine --verbose --arch x86_64 --cpu 2 --memory 4 --disk 5  
         fi
     fi
 }
