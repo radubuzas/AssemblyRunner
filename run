@@ -87,7 +87,7 @@ else
         pid=$!
         wait $pid
 
-        logs=$(docker compose logs 2>&1)
+        logs=$(docker compose logs 2>&1 | tr -d '\0')
         if echo "$logs" | head -n 2 | grep -q "assembly_environment  | gcc: fatal error: no input files"; then
             echo -e "${RED}You did not pass the correct file to compile."
             exit 1
