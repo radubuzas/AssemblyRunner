@@ -67,9 +67,38 @@ If you have multiple `.s` and `.asm` files in your directory, you can let the sc
 ./run
 ```
 
+### Debugging with run command and VSCode
+If you have a file named `hello.asm` in your directory, you can run it with the following command: 
+```bash 
+./run gdb hello.asm
+```
+
+Then run the **docker-debug** configuration in order to debug from VSCode. Make sure you either use this project in VSCode or add the **.vscode** directory in your project.
+
+
+### Debugging with VSCode only
+Start the **vscode-debug** configuration from VSCode. Once the debugger is connected, run the task **docker-attach**.
+
+### Debugging remotely via gdb
+If you have a file named `hello.asm` in your directory, you can run it with the following command: 
+```bash 
+./run gdb hello.asm
+```
+
+Run from a different console 
+```bash
+gdb executable
+```
+
+Inside gdb execute
+```
+target remote 0.0.0.0:4444
+```
+
 ## Contributors
 
 - **Radu Buzas** - Initial work
+- **Florin Dinu** - VSCode and remote debug support
 
 ## License
 
