@@ -98,7 +98,6 @@ if [ $# -eq 0 ]; then
     program_name=$(ls -1t | grep -E '\.(asm|s)$' | head -n 1)
     # extension=$(sed -r 's/(\.[^.]+$){1}//')
 
-    echo PROGRAM_NAME=$program_name >.env
     echo -e "Going to compile the latest file: ${GREEN}" $program_name
 
     gcc -x assembler -m32 ${program_name} -o executable && ./executable && rm executable
