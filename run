@@ -77,6 +77,11 @@ if [ -z "$IS_LIMA" ]; then
             limactl shell x86_machine sudo apt install -y gcc g++-multilib gdb
         fi
 
+        if limactl list | grep -E 'x86_machine\s+Stopped' &>/dev/null; then
+            echo -e "Starting ${GREEN}lima x86_machine${NC}!"
+            limactl start x86_machine
+        fi
+
         echo -e "Connecting to ${GREEN}lima x86_machine${NC}.\nRemember to run ${RED}exit${NC} or ${RED}Ctrl+D${NC} to exit the shell.\nMake sure to rerun ./run if you want to compile a new file."
         limactl shell x86_machine
         exit 0
@@ -92,7 +97,7 @@ if [ $# -eq 0 ]; then
 
     echo -e "Going to compile the latest file: ${GREEN}" $program_name
 
-    gcc -x assembler -m32 ${program_name} -o executable && ./executable && rm executable
+    gcc -x assembler -m32 ${program_name} -o executable && ./executable
 else
     if [ $# -gt 1 ]; then
         echo "Pass only one argument."
@@ -102,7 +107,7 @@ else
 
         echo -e "Going to compile given file: ${GREEN}" $program_name
         
-        gcc -x assembler -m32 ${program_name} -o executable && ./executable && rm executable
+        gcc -x assembler -m32 ${program_name} -o executable && ./executable
 
     fi
 fi
